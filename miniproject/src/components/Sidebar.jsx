@@ -12,10 +12,10 @@ const Sidebar = () => {
   }
 
   return (
-    <div className='flex justify-between items-center mx-10 my-5'>
+    <div className='flex flex-col h-screen overflow-x-hidden justify-between items-center px-10 py-5'>
       <Link to='/'>Home</Link>
       {token ? (
-        <button onClick={handleLogout}>Log Out</button>) : (
+        <button onClick={handleLogout} className='bg-blue-500 px-5 py-2 rounded-3xl'>Log Out</button>) : (
           <Link to='/login'><button className='bg-blue-500 px-5 py-2 rounded-3xl'>Login</button></Link>
         )
       } 

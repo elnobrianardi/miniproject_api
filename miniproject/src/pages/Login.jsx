@@ -1,6 +1,6 @@
 import React, { useState, } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -43,12 +43,14 @@ const Login = () => {
     }
 
   return (
-    <div>
+    <div className='flex flex-col justify-center items-center gap-5 w-screen'>
+        <h1>Welcome Back!</h1>
         {success && <p className='text-green-500'>{success}</p>}
         {error && <p className='text-red-500'>{error}</p>}
         <input onChange={handleChangeEmail} type="email" placeholder='Email' name='email' />
-        <input onChange={handleChangePassword} type="password" placeholder='password' name='password' />
-        <button onClick={handleSubmit} type="submit">Login</button>
+        <input onChange={handleChangePassword} type="password" placeholder='password' name='password'/>
+        <p>Don't have an account? <Link to="/register">Register</Link></p>
+        <button onClick={handleSubmit} type="submit" className='bg-blue-500 px-5 py-2 rounded-3xl'>Login</button>
     </div>
   )
 }
