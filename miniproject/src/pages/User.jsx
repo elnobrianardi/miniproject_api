@@ -26,10 +26,11 @@ const User = () => {
     },[])
 
   return (
-    <div>
-        <img src={user.avatar} alt="" />
-        <h3>{user.first_name} {user.last_name}</h3>
-        <p>{user.email}</p>
+    <div className='flex flex-col items-center justify-center m-10'>
+        <h1 className='mb-10 font-bold text-3xl'>User Profile</h1>
+        <img src={user.avatar} alt="" className='rounded-xl'/>
+        <h3 className='font-bold text-xl'>{user.first_name} {user.last_name}</h3>
+        <p className='text-xs'>{user.email}</p>
     </div>
   )
 }

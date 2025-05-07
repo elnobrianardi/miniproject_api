@@ -44,21 +44,22 @@ const Home = () => {
     }
   };
   return (
-    <div>
-      <div className="grid grid-cols-3 mx-10 my-5 items-center justify-center w-full gap-5">
+    <div className="flex-1 px-4 py-5 overflow-x-hidden min-w-0">
+        <h1 className="text-4xl font-bold mb-10 text-center">Users List</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {users.map((user) => (
-          <div key={user.id} className="flex flex-col items-center justify-center">
-            <Link to={`/user/${user.id}`}><img src={user.avatar} alt="" /></Link>
+          <div key={user.id} className="flex flex-col items-center justify-center border-4 border-transparent hover:border-blue-500 rounded-xl cursor-pointer transition duration-400 w-fit mx-auto p-5">
+            <Link to={`/user/${user.id}`}><img src={user.avatar} alt="" className="rounded-xl"/></Link>
             <Link to={`/user/${user.id}`}>
-                <h3>{user.first_name} {user.last_name}</h3>
+                <h3 className="font-bold text-xl">{user.first_name} {user.last_name}</h3>
             </Link>
-            <p>{user.email}</p>
+            <p className="text-xs">{user.email}</p>
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-center gap-5">
-        <button onClick={handlePrevPage}>Previous</button>
-        <button onClick={handleNextPage}>Next</button>
+      <div className="flex items-center justify-center mt-15">
+        <button onClick={handlePrevPage} className="text-white bg-black px-5 py-2 rounded-l-3xl hover:bg-blue-500 transition duration-200 cursor-pointer font-semibold">Prev</button>
+        <button onClick={handleNextPage} className="text-white bg-black px-5 py-2 rounded-r-3xl hover:bg-blue-500 transition duration-200 cursor-pointer font-semibold">Next</button>
       </div>
     </div>
   );

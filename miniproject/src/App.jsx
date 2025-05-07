@@ -11,14 +11,16 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-      <div className="flex min-h-screen">
+      <div className="flex h-screen overflow-hidden">
       <Sidebar />
+      <div className="flex-1 overflow-x-hidden">
       <Routes>
           <Route path="/" element={<ProtectedRoutes><Home/></ProtectedRoutes>} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/user/:id" element={<ProtectedRoutes><User /></ProtectedRoutes>} />
         </Routes>
+      </div>
       </div>
       </BrowserRouter>
     </>

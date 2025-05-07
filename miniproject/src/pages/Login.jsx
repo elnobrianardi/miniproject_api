@@ -31,26 +31,26 @@ const Login = () => {
 
         try {
             const response = await axios.post('https://reqres.in/api/login', payload, headers)
-            setSuccess("Successfully Logged in")
+            setSuccess("Successfully Logged in!")
             localStorage.setItem('token', response.data.token)
             setTimeout(() => {
                 navigate('/')
             }, 2000)
         } catch (error) {
             console.log(error.message);
-            setError('Invalid Credentials')
+            setError('Invalid Credentials!')
         }
     }
 
   return (
-    <div className='flex flex-col justify-center items-center gap-5 w-screen'>
-        <h1>Welcome Back!</h1>
-        {success && <p className='text-green-500'>{success}</p>}
-        {error && <p className='text-red-500'>{error}</p>}
-        <input onChange={handleChangeEmail} type="email" placeholder='Email' name='email' />
-        <input onChange={handleChangePassword} type="password" placeholder='password' name='password'/>
-        <p>Don't have an account? <Link to="/register">Register</Link></p>
-        <button onClick={handleSubmit} type="submit" className='bg-blue-500 px-5 py-2 rounded-3xl'>Login</button>
+    <div className='flex flex-col justify-center items-center gap-5 w-screen h-screen'>
+        <h1 className='font-bold text-3xl'>Welcome Back!</h1>
+        {success && <p className='text-green-500 font-semibold'>{success}</p>}
+        {error && <p className='text-red-500 font-semibold'>{error}</p>}
+        <input onChange={handleChangeEmail} type="email" placeholder='Email' name='email' className='px-5 py-2 rounded-3xl border-2 border-black focus:border-blue-500 focus:outline-none transition duration-200'/>
+        <input onChange={handleChangePassword} type="password" placeholder='Password' name='password' className='px-5 py-2 rounded-3xl border-2 border-black focus:border-blue-500 focus:outline-none transition duration-200'/>
+        <p className='text-xs'>Don't have an account? <Link to="/register"><span className='hover:text-blue-500'>Register</span></Link></p>
+        <button onClick={handleSubmit} type="submit" className='bg-black text-white hover:bg-blue-500 transition duration-200 cursor-pointer px-5 py-2 rounded-3xl'>Login</button>
     </div>
   )
 }
