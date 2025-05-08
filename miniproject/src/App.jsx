@@ -11,8 +11,6 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-      <div className="flex h-screen overflow-hidden">
-      <Sidebar />
       <div className="flex-1 overflow-x-hidden">
       <Routes>
           <Route path="/" element={<ProtectedRoutes><Home/></ProtectedRoutes>} />
@@ -20,7 +18,6 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/user/:id" element={<ProtectedRoutes><User /></ProtectedRoutes>} />
         </Routes>
-      </div>
       </div>
       </BrowserRouter>
     </>
