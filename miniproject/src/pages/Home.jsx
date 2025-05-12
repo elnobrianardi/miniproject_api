@@ -3,13 +3,16 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Loader } from "lucide-react";
 import { motion } from "framer-motion";
-import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
+import SearchBar from "../components/SearchBar";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState('')
 
   const fetchUser = async (page) => {
     setLoading(true);
@@ -18,7 +21,24 @@ const Home = () => {
         `https://reqres.in/api/users?page=${page}`,
         { headers: { "x-api-key": "reqres-free-v1" } }
       );
-      setUsers(response.data.data);
+
+      const enhanchedUsers = response.data.data.map((user) => ({
+        ...user,
+        description: "A passionate and dedicated individual working in the tech industry.",
+      job_division: "Engineering",
+      how_long_worked:
+          user.id % 2 === 0
+            ? "5 years"
+            : user.id % 2 === 1
+            ? "6 months"
+            : "1 months",
+      status_level: user.id % 2 === 0
+      ? "Manager"
+      : user.id % 2 === 1
+      ? "Trainee"
+      : "Intern",
+      }))
+      setUsers(enhanchedUsers);
       setTotalPages(response.data.total_pages);
     } catch (error) {
       console.error("Failed to fetch users", error);
@@ -38,11 +58,17 @@ const Home = () => {
     if (currentPage > 1) setCurrentPage((prev) => prev - 1);
   };
 
+  const filteredUsers = users.filter((user) => 
+    `${user.first_name} ${user.last_name}`
+  .toLowerCase()
+  .includes(search.toLowerCase())
+  )
+
   return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <div className="flex-1 px-4 py-5 overflow-x-hidden min-w-0">
-        <h1 className="text-4xl font-bold mb-10 text-center">Users List</h1>
+    <div className="flex flex-col">
+      <Navbar search={search} setSearch={setSearch}/>
+      <Breadcrumbs/>
+        <h1 className="text-4xl font-bold mb-5 text-center">Users List</h1>
   
         {loading ? (
           <div className="flex justify-center items-center h-40">
@@ -56,7 +82,7 @@ const Home = () => {
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-              {users.map((user, index) => (
+              {filteredUsers.map((user, index) => (
                 <motion.div
                   key={user.id}
                   initial={{ y: 100, opacity: 0 }}
@@ -77,6 +103,10 @@ const Home = () => {
                     </h3>
                   </Link>
                   <p className="text-xs">{user.email}</p>
+                  <p>{user.description}</p>
+                  <p>{user.job_division}</p>
+                  <p>{user.status_level}</p>
+                  <p>{user.how_long_worked}</p>
                 </motion.div>
               ))}
             </div>
@@ -97,7 +127,6 @@ const Home = () => {
           </>
         )}
       </div>
-    </div>
   );
   
 };
