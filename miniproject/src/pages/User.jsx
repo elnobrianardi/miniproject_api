@@ -3,8 +3,9 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Loader } from "lucide-react";
 import { motion } from "framer-motion";
-import Navbar from "../components/Navbar"; // adjust path if needed
+import Navbar from "../components/Navbar";
 import Breadcrumbs from "../components/Breadcrumbs";
+import Footer from "../components/Footer";
 
 const User = () => {
   const [user, setUser] = useState({});
@@ -16,14 +17,10 @@ const User = () => {
       const response = await axios.get(`https://reqres.in/api/users/${id}`, {
         headers: { "x-api-key": "reqres-free-v1" },
       });
-      const user = response.data.data
-      const enhanchedUsers = {
+      const user = response.data.data;
+      const enhancedUser = {
         ...user,
-        address: {
-          street: "123 Main St",
-          city: "Sample City",
-          zip: "12345",
-        },
+        address: { city: "Sample City" },
         phone: "+1-555-1234",
         social_media: {
           facebook: `https://facebook.com/${user.first_name.toLowerCase()}`,
@@ -37,14 +34,15 @@ const User = () => {
             ? "5 years"
             : user.id % 2 === 1
             ? "6 months"
-            : "1 months",
-      status_level: user.id % 2 === 0
-      ? "Manager"
-      : user.id % 2 === 1
-      ? "Trainee"
-      : "Intern",
-      }
-      setUser(enhanchedUsers);
+            : "1 month",
+        status_level:
+          user.id % 2 === 0
+            ? "Manager"
+            : user.id % 2 === 1
+            ? "Trainee"
+            : "Intern",
+      };
+      setUser(enhancedUser);
       console.log(user);
     } catch (error) {
       console.error("Failed to fetch user", error);
@@ -61,7 +59,7 @@ const User = () => {
     return (
       <div className="flex h-screen">
         <Navbar />
-        <Breadcrumbs/>
+        <Breadcrumbs />
         <div className="flex flex-1 items-center justify-center">
           <motion.div
             animate={{ rotate: 360 }}
@@ -75,35 +73,42 @@ const User = () => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full">
       <Navbar />
-      <Breadcrumbs/>
+      <Breadcrumbs />
       <motion.div
-        className="flex flex-col items-center flex-1"
+        className="flex flex-col items-center flex-1 m-5"
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
       >
         <h1 className="mb-5 font-bold text-3xl">User Profile</h1>
-        <div className="flex flex-col items-center justify-center p-5 gap-1 rounded-2xl hover:border-blue-500 border-4 border-transparent transition duration-200">
-          <img src={user.avatar} alt="" className="rounded-xl" />
-          <h3 className="font-bold text-xl">
-            {user.first_name} {user.last_name}
-          </h3>
-          <p className="text-xs">{user.email}</p>
-          <p className="text-xs">{user.address.street}</p>
-          <p className="text-xs">{user.address.city}</p>
-          <p className="text-xs">{user.address.zip}</p>
-          <p className="text-xs">{user.phone}</p>
-          <p className="text-xs">{user.social_media.facebook}</p>
-          <p className="text-xs">{user.social_media.twitter}</p>
-          <p className="text-xs">{user.social_media.instagram}</p>
-          <p className="text-xs">{user.description}</p>
-          <p className="text-xs">{user.job_division}</p>
-          <p className="text-xs">{user.status_level}</p>
-          <p className="text-xs">{user.how_long_worked}</p>
+        <div className="flex flex-col items-center justify-center p-5 gap-3 rounded-2xl border-4 border-transparent hover:border-blue-500 transition duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl w-full max-w-sm mx-auto">
+          <img
+            src={user.avatar}
+            alt="User Avatar"
+            className="w-24 h-24 rounded-full mx-auto mb-4 transform transition-transform duration-300 ease-in-out hover:scale-110"
+          />
+          <h3 className="font-bold text-xl">{user.first_name} {user.last_name}</h3>
+          <p className="text-xs text-gray-600">{user.email}</p>
+          <p className="text-xs text-gray-600">{user.address.city}</p>
+          <p className="text-xs text-gray-600">{user.phone}</p>
+
+          <div className="bg-gray-100 rounded-lg p-4 text-left text-sm space-y-1 w-full">
+            <p><span className="font-semibold">Facebook:</span> <a href={user.social_media.facebook} className="text-blue-500" target="_blank" rel="noopener noreferrer">{user.social_media.facebook}</a></p>
+            <p><span className="font-semibold">Twitter:</span> <a href={user.social_media.twitter} className="text-blue-500" target="_blank" rel="noopener noreferrer">{user.social_media.twitter}</a></p>
+            <p><span className="font-semibold">Instagram:</span> <a href={user.social_media.instagram} className="text-blue-500" target="_blank" rel="noopener noreferrer">{user.social_media.instagram}</a></p>
+          </div>
+
+          <div className="mt-4 space-y-1 text-xs text-gray-600">
+            <p><span className="font-semibold">Description:</span> {user.description}</p>
+            <p><span className="font-semibold">Job Division:</span> {user.job_division}</p>
+            <p><span className="font-semibold">Status Level:</span> {user.status_level}</p>
+            <p><span className="font-semibold">Experience:</span> {user.how_long_worked}</p>
+          </div>
         </div>
       </motion.div>
+      <Footer />
     </div>
   );
 };

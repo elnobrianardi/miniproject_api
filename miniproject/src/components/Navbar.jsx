@@ -32,43 +32,56 @@ const Navbar = ({search, setSearch}) => {
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </motion.button>
-        <div className="text-lg font-bold">MyApp</div>
+        <div className="text-lg font-bold">ConnectVerse</div>
       </div>
 
       {/* Navbar Links (Desktop) */}
-      <div className="hidden md:flex justify-between gap-2 items-center md:mt-0">
-        <div className="flex gap-2">
-        <Link
-          to="/"
-          className="text-center md:text-left transition duration-200 hover:bg-blue-500 hover:text-white rounded-3xl px-5 py-2 font-semibold"
+<div className="hidden md:flex items-center justify-between gap-4 md:mt-0">
+  <div className="flex w-full items-center">
+    {/* 1: Logo */}
+    <div className="flex-1">
+      <p className="text-lg font-bold">ConnectVerse</p>
+    </div>
+
+    {/* 2: Links */}
+    <div className="flex-2 flex justify-center gap-4">
+      <Link
+        to="/"
+        className="text-center transition duration-200 hover:bg-blue-500 hover:text-white rounded-3xl px-5 py-2 font-semibold"
+      >
+        Home
+      </Link>
+      
+        <p className="transition duration-200 hover:bg-blue-500 hover:text-white rounded-3xl px-5 py-2 cursor-pointer font-semibold">
+          About
+        </p>
+        <p className="transition duration-200 hover:bg-blue-500 hover:text-white rounded-3xl px-5 py-2 cursor-pointer font-semibold">
+          Contact
+        </p>
+        {token && (
+        <button
+          onClick={handleLogout}
+          className="transition duration-200 hover:bg-blue-500 hover:text-white rounded-3xl px-5 py-2 cursor-pointer font-semibold"
         >
-          Home
-        </Link>
-        {token ? (
-          <button
-            onClick={handleLogout}
-            className="transition duration-200 hover:bg-blue-500 hover:text-white rounded-3xl px-5 py-2 cursor-pointer font-semibold"
-          >
-            Log Out
+          Log Out
+        </button>
+      )}
+      {!token && (
+        <Link to="/login">
+          <button className="transition duration-200 hover:bg-blue-500 hover:text-white rounded-3xl px-5 py-2 cursor-pointer font-semibold">
+            Login
           </button>
-        ) : (
-          <Link to="/login">
-            <button className="transition duration-200 hover:bg-blue-500 hover:text-white rounded-3xl px-5 py-2 cursor-pointer font-semibold">
-              Login
-            </button>
-          </Link>
-        )}
-        </div>
-        <div className="hidden md:block ">
-        {
-            token && (
-              <SearchBar search={search} setSearch={setSearch}/>
-            )
-          }
-        </div>
-        
-        
-      </div>
+        </Link>
+      )}
+    </div>
+
+    {/* 3: Search Bar */}
+    <div className="flex-1 flex justify-end">
+      {token && <SearchBar search={search} setSearch={setSearch} />}
+    </div>
+  </div>
+</div>
+
 
       {/* Navbar Links (Mobile Menu) */}
       {isOpen && (
@@ -86,19 +99,25 @@ const Navbar = ({search, setSearch}) => {
           >
             Home
           </Link>
+          <p className="transition duration-200 hover:bg-blue-500 hover:text-white px-5 py-2 rounded-3xl font-semibold text-left cursor-pointer">
+            About
+          </p>
+          <p className="transition duration-200 hover:bg-blue-500 hover:text-white px-5 py-2 rounded-3xl font-semibold text-left cursor-pointer">
+            Contact
+          </p>
           {token ? (
             <button
               onClick={() => {
                 handleLogout();
                 setIsOpen(false);
               }}
-              className="transition duration-200 hover:bg-blue-500 hover:text-white px-5 py-2 rounded-3xl font-semibold text-left"
+              className="transition duration-200 hover:bg-blue-500 hover:text-white px-5 py-2 rounded-3xl font-semibold text-left cursor-pointer"
             >
               Log Out
             </button>
           ) : (
             <Link to="/login" onClick={() => setIsOpen(false)}>
-              <button className="transition duration-200 hover:bg-blue-500 hover:text-white px-5 py-2 rounded-3xl font-semibold text-left">
+              <button className="transition duration-200 hover:bg-blue-500 hover:text-white px-5 py-2 rounded-3xl font-semibold text-left cursor-pointer">
                 Login
               </button>
             </Link>

@@ -47,7 +47,14 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-5 w-screen h-screen">
+    <div className="relative flex flex-col justify-center items-center gap-5 w-screen h-screen">
+      <div className="absolute top-5 right-5">
+        <Link to="/welcome">
+          <button className="text-black hover:text-blue-500 font-semibold cursor-pointer">
+            ← Back to Home
+          </button>
+        </Link>
+      </div>
       <h1 className="font-bold text-3xl">Welcome Back!</h1>
       {success && <p className="text-green-500 font-semibold">{success}</p>}
       {error && <p className="text-red-500 font-semibold">{error}</p>}
